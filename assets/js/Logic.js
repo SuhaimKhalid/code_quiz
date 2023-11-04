@@ -12,9 +12,15 @@ var choices = document.querySelector("#choices");
 // Delcare a variable to show time countdown
 var time = document.querySelector("#time");
 
+
+// Delcare a variable to get the div of Question screen
+var end_screen = document.querySelector("#end-screen");
+
+var finalscore = document.querySelector("#final-score");
 //Declare a variable to have number valur that can be shown on the screen
 var count=75;
 var qn=0;
+var score=0;
 
 // Function to Start quiz on the click of button
 start_quiz.addEventListener("click",function(event)
@@ -33,7 +39,7 @@ start_quiz.addEventListener("click",function(event)
     // When countdown goes to 0 then terminate the timer
     if(count<0)
     {
-       clearInterval(timer);
+       clearInterval(timer); // To stop the timer
     }
     else{
        
@@ -49,14 +55,15 @@ start_quiz.addEventListener("click",function(event)
 
 // Function to display questions and anwers on the screen
 function questiondisplay(){
-
     
+   
     question_title.textContent = questions[qn].question;
     for(var i=0; i<questions[qn].answers.length; i++)
     {
-    var button = document.createElement("button");
+    
+        var button = document.createElement("button");
     choices.appendChild(button);
-    button.textContent= i+1 +"."+ questions[qn].answers[i]; 
+    button.textContent= i+"."+ questions[qn].answers[i]; 
     button.setAttribute("data-index", i);  
 
     //Get the target button on the screen
@@ -64,14 +71,53 @@ function questiondisplay(){
        
         if(event.target.dataset.index == questions[qn].correct)
         {
-           
-            qn++;
-            questiondisplay();
+          score+=10;
             
-            choices.children.remove();
+            while(choices.hasChildNodes())
+            {
+                choices.removeChild(choices.firstChild);
+            }
+            if(qn < questions.length-1)
+            {
+                qn++;
+               
+                questiondisplay();
+            }
+            // else
+            // {
+            //     end_screen.setAttribute("class","");
+            //     question_screen.setAttribute("class","hide");
+            //     finalscore.textContent= score;
+
+            //     count=0;
+
+            // }
+
+            
         }
         else{
-            alert("you are wrong");
+           
+            count-=10;
+            while(choices.hasChildNodes())
+            {
+                choices.removeChild(choices.firstChild);
+            }
+            if(qn < questions.length-1)
+            {
+                qn++;
+               
+                questiondisplay();
+            }
+            // else
+            // {
+            //     end_screen.setAttribute("class","");
+            //     question_screen.setAttribute("class","hide");
+            //     finalscore.textContent= score;
+
+            //     count=0;
+
+            // }
+            
         }
     });
     }
@@ -80,10 +126,4 @@ function questiondisplay(){
 
 
 
-// for(var q=0; q<questions.length; q++)
-// {
-//     question_title.textContent = questions[q].question;
-    
-
-// };
 
