@@ -1,4 +1,3 @@
-
 // Delcare a varaible to the id of button to start quiz
 var start_quiz = document.querySelector("#start");
 // Delcare a variable to get the div of start screen
@@ -15,12 +14,13 @@ var time = document.querySelector("#time");
 
 // Delcare a variable to get the div of Question screen
 var end_screen = document.querySelector("#end-screen");
-
+// Declare a Vaiable to show the final score on the screen
 var finalscore = document.querySelector("#final-score");
-//Declare a variable to have number valur that can be shown on the screen
-var count=75;
-var qn=0;
-var score=0;
+
+
+var count=75;    //To show Count down timer
+var qn=0;       //Number of questions
+var score=0;   //Save score on the base of right answer
 
 // Function to Start quiz on the click of button
 start_quiz.addEventListener("click",function(event)
@@ -41,10 +41,6 @@ start_quiz.addEventListener("click",function(event)
     {
        clearInterval(timer); // To stop the timer
     }
-    else{
-       
-    }
-
     },1000);
 
     // Start the Question function
@@ -56,66 +52,69 @@ start_quiz.addEventListener("click",function(event)
 // Function to display questions and anwers on the screen
 function questiondisplay(){
     
-   
+    //To show the question on the screen from the array of question
     question_title.textContent = questions[qn].question;
+    // Make a loop to show all answer related to the question
     for(var i=0; i<questions[qn].answers.length; i++)
     {
     
-        var button = document.createElement("button");
+    // Create Button on HTML By Javascript 
+    var button = document.createElement("button");
+    // Add Newly Created button to the choice name id div
     choices.appendChild(button);
+    // Show the answers in the button
     button.textContent= i+"."+ questions[qn].answers[i]; 
     button.setAttribute("data-index", i);  
 
-    //Get the target button on the screen
+    //Make the function to get the target of button on which we click
     button.addEventListener("click",function getanswer(event){
        
+        // Checking if answer is correct or not
         if(event.target.dataset.index == questions[qn].correct)
         {
-          score+=10;
+          score+=10; //Add 10 score
             
+          // To remove the buttons which we created early if they are already existed remove them
             while(choices.hasChildNodes())
             {
                 choices.removeChild(choices.firstChild);
             }
+            // Checking to not exceed from the length of questions
             if(qn < questions.length-1)
             {
                 qn++;
-               
-                questiondisplay();
+                questiondisplay(); //Calling the question function
             }
-            else
+            else //When questons are completed
             {
-                end_screen.setAttribute("class","");
-                question_screen.setAttribute("class","hide");
-                finalscore.textContent= score;
-
-                count=0;
-
+               
+                end_screen.setAttribute("class","");             //Show end Screen
+                question_screen.setAttribute("class","hide");   //Hide Question screen
+                finalscore.textContent= score;                 //Display the score of the questions
+                count=0;                                      //To stop the timer
             }
 
-            
         }
         else{
            
-            count-=10;
+            count-=10; //Decrement in Timer if answer is wrong
+             // To remove the buttons which we created early if they are already existed remove them
             while(choices.hasChildNodes())
             {
                 choices.removeChild(choices.firstChild);
             }
+             // Checking to not exceed from the length of questions
             if(qn < questions.length-1)
             {
                 qn++;
-               
-                questiondisplay();
+                questiondisplay();  //Calling the question function
             }
             else
             {
-                end_screen.setAttribute("class","");
-                question_screen.setAttribute("class","hide");
-                finalscore.textContent= score;
-
-                count=0;
-
+                end_screen.setAttribute("class","");             //Show end Screen
+                question_screen.setAttribute("class","hide");   //Hide Question screen
+                finalscore.textContent= score;                 //Display the score of the questions
+                count=0;                                      //To stop the timer
             }
             
         }
