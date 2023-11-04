@@ -12,13 +12,15 @@ var choices = document.querySelector("#choices");
 // Delcare a variable to show time countdown
 var time = document.querySelector("#time");
 
-var count=75; //Declare a variable to have number valur that can be shown on the screen
+//Declare a variable to have number valur that can be shown on the screen
+var count=75;
 var qn=0;
 
 // Function to Start quiz on the click of button
 start_quiz.addEventListener("click",function()
 {
-
+    // To show timer on the screen immediatley after the code run
+    time.textContent=count; //time:75
     // Hide the start Screen
     document.getElementById("start-screen").className = "hide";
     // Show the question Screen
@@ -31,54 +33,39 @@ start_quiz.addEventListener("click",function()
     if(count<0)
     {
        clearInterval(timer);
+    }
+    else{
        
     }
 
     },1000);
+
+    // Start the Question function
+    questiondisplay();
    
 });
 
 
-function questiondisplay(){
+// Function to display questions and anwers on the screen
+function questiondisplay(event){
 
-
-question_title.textContent = questions[qn].question;
-for(var i=0; i<questions[qn].answers.length; i++)
+for(var q=0; q<questions.length; q++)
 {
+    question_title.textContent = questions[q].question;
+    for(var i=0; i<questions[q].answers.length; i++)
+    {
     var button = document.createElement("button");
     choices.appendChild(button);
-    if(button.length>4)
-    {
-        button.remove();
-    } 
-    button.textContent= i+1 +"."+ questions[0].answers[i];    
+    button.textContent= i+1 +"."+ questions[q].answers[i]; 
+    button.setAttribute("data-index", i+1);  
+    answer();
+    }
+
 }
+
+};
+
+function answer(event){
+
+console.log(event.target);
 }
-
-
-
-// function timerfunction (){
-
-// var timer = setInterval(function(){
-//     time.textContent=count;
-//     count--;
-//     if(count<0)
-//     {
-//         if(qn>questions.length-2)
-//         {
-//         clearInterval(timer);
-//         }
-//         else{
-//         count=40;
-//         qn++;
-//         questiondisplay();
-        
-//     }
-
-//     }
-//     else{
-
-//     }
-// },1000);
-
-// }
