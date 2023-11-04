@@ -15,15 +15,27 @@ var time = document.querySelector("#time");
 var count=75; //Declare a variable to have number valur that can be shown on the screen
 var qn=0;
 
-// start quiz
+// Function to Start quiz on the click of button
 start_quiz.addEventListener("click",function()
 {
-document.getElementById("start-screen").className = "hide";
-document.getElementById('questions').className = "";
-timerfunction();
-questiondisplay();
 
-        
+    // Hide the start Screen
+    document.getElementById("start-screen").className = "hide";
+    // Show the question Screen
+    document.getElementById('questions').className = "";
+
+    // Start the timer
+    var timer = setInterval(function(){
+    time.textContent=count; //Display the timeleft on the screen
+    count--; //Decrement from the timer
+    if(count<0)
+    {
+       clearInterval(timer);
+       
+    }
+
+    },1000);
+   
 });
 
 
@@ -45,28 +57,28 @@ for(var i=0; i<questions[qn].answers.length; i++)
 
 
 
-function timerfunction (){
+// function timerfunction (){
 
-var timer = setInterval(function(){
-    time.textContent=count;
-    count--;
-    if(count<0)
-    {
-        if(qn>questions.length-2)
-        {
-        clearInterval(timer);
-        }
-        else{
-        count=40;
-        qn++;
-        questiondisplay();
+// var timer = setInterval(function(){
+//     time.textContent=count;
+//     count--;
+//     if(count<0)
+//     {
+//         if(qn>questions.length-2)
+//         {
+//         clearInterval(timer);
+//         }
+//         else{
+//         count=40;
+//         qn++;
+//         questiondisplay();
         
-    }
+//     }
 
-    }
-    else{
+//     }
+//     else{
 
-    }
-},100);
+//     }
+// },1000);
 
-}
+// }
