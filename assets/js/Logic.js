@@ -108,15 +108,15 @@ function questiondisplay(){
                
                 questiondisplay();
             }
-            // else
-            // {
-            //     end_screen.setAttribute("class","");
-            //     question_screen.setAttribute("class","hide");
-            //     finalscore.textContent= score;
+            else
+            {
+                end_screen.setAttribute("class","");
+                question_screen.setAttribute("class","hide");
+                finalscore.textContent= score;
 
-            //     count=0;
+                count=0;
 
-            // }
+            }
             
         }
     });
