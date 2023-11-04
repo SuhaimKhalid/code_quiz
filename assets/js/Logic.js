@@ -17,7 +17,7 @@ var count=75;
 var qn=0;
 
 // Function to Start quiz on the click of button
-start_quiz.addEventListener("click",function()
+start_quiz.addEventListener("click",function(event)
 {
     // To show timer on the screen immediatley after the code run
     time.textContent=count; //time:75
@@ -30,6 +30,7 @@ start_quiz.addEventListener("click",function()
     var timer = setInterval(function(){
     time.textContent=count; //Display the timeleft on the screen
     count--; //Decrement from the timer
+    // When countdown goes to 0 then terminate the timer
     if(count<0)
     {
        clearInterval(timer);
@@ -41,31 +42,48 @@ start_quiz.addEventListener("click",function()
     },1000);
 
     // Start the Question function
-    questiondisplay();
+    questiondisplay(event);
    
 });
 
 
 // Function to display questions and anwers on the screen
-function questiondisplay(event){
+function questiondisplay(){
 
-for(var q=0; q<questions.length; q++)
-{
-    question_title.textContent = questions[q].question;
-    for(var i=0; i<questions[q].answers.length; i++)
+    
+    question_title.textContent = questions[qn].question;
+    for(var i=0; i<questions[qn].answers.length; i++)
     {
     var button = document.createElement("button");
     choices.appendChild(button);
-    button.textContent= i+1 +"."+ questions[q].answers[i]; 
-    button.setAttribute("data-index", i+1);  
-    answer();
+    button.textContent= i+1 +"."+ questions[qn].answers[i]; 
+    button.setAttribute("data-index", i);  
+
+    //Get the target button on the screen
+    button.addEventListener("click",function getanswer(event){
+       
+        if(event.target.dataset.index == questions[qn].correct)
+        {
+           
+            qn++;
+            questiondisplay();
+            
+            choices.children.remove();
+        }
+        else{
+            alert("you are wrong");
+        }
+    });
     }
 
 }
 
-};
 
-function answer(event){
 
-console.log(event.target);
-}
+// for(var q=0; q<questions.length; q++)
+// {
+//     question_title.textContent = questions[q].question;
+    
+
+// };
+
