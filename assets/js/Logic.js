@@ -10,6 +10,10 @@ var question_title = document.querySelector("#question-title");
 var choices = document.querySelector("#choices");
 // Delcare a variable to show time countdown
 var time = document.querySelector("#time");
+// Delcare a variable to access the input from End screen
+var initials = document.querySelector("#initials");
+// Declare a vaiable to get acces of the button
+var submit = document.querySelector("#submit");
 
 
 // Delcare a variable to get the div of Question screen
@@ -39,7 +43,8 @@ start_quiz.addEventListener("click",function(event)
     // When countdown goes to 0 then terminate the timer
     if(count<0)
     {
-       clearInterval(timer); // To stop the timer
+       clearInterval(timer);  // To stop the timer
+       end_Screen();          // To Show End Screen
     }
     },1000);
 
@@ -66,38 +71,82 @@ function questiondisplay(){
     button.textContent= i+"."+ questions[qn].answers[i]; 
     button.setAttribute("data-index", i);  
 
+   
+
     //Make the function to get the target of button on which we click
     button.addEventListener("click",function getanswer(event){
        
         // Checking if answer is correct or not
         if(event.target.dataset.index == questions[qn].correct)
         {
-          score+=10; //Add 10 score
-            
-          // To remove the buttons which we created early if they are already existed remove them
-            while(choices.hasChildNodes())
-            {
-                choices.removeChild(choices.firstChild);
-            }
-            // Checking to not exceed from the length of questions
-            if(qn < questions.length-1)
-            {
-                qn++;
-                questiondisplay(); //Calling the question function
-            }
-            else //When questons are completed
-            {
-               
-                end_screen.setAttribute("class","");             //Show end Screen
-                question_screen.setAttribute("class","hide");   //Hide Question screen
-                finalscore.textContent= score;                 //Display the score of the questions
-                count=0;                                      //To stop the timer
-            }
+            var hr = document.createElement("hr");
+            var h5 = document.createElement("h5");
+            choices.appendChild(hr);
+            choices.appendChild(h5);
+            hr.setAttribute("style","opacity:0.5");
+            h5.setAttribute("style","opacity:0.5");
+            h5.textContent="CORRECT!";
+            console.log(h5);
 
+
+            score+=10; //Add 10 score
+             
+            // To remove the buttons which we created early if they are already existed remove them
+              while(choices.hasChildNodes())
+              {
+                  choices.removeChild(choices.firstChild);
+              }
+              // Checking to not exceed from the length of questions
+              if(qn < questions.length-1)
+              {
+                  qn++;
+                  questiondisplay(); //Calling the question function
+              }
+              else //When questons are completed
+              {
+                 
+                  end_Screen();   // To Show End Screen
+              }
+
+        // var ct =  setInterval(function(){
+        //     var answer_timer=20;
+        //      // Show correct and wrong answers on the screen
+        //      var hr = document.createElement("hr");
+        //      var h5 = document.createElement("h5");
+        //      choices.appendChild(hr);
+        //      choices.appendChild(h5);
+        //      hr.setAttribute("style","opacity:0.5");
+        //      h5.setAttribute("style","opacity:0.5");
+        //      h5.textContent="CORRECT!";
+        //      answer_timer--;
+        //    if(answer_timer <0)
+        //    {
+        //     clearInterval(ct);
+        //     score+=10; //Add 10 score
+             
+        //    // To remove the buttons which we created early if they are already existed remove them
+        //      while(choices.hasChildNodes())
+        //      {
+        //          choices.removeChild(choices.firstChild);
+        //      }
+        //      // Checking to not exceed from the length of questions
+        //      if(qn < questions.length-1)
+        //      {
+        //          qn++;
+        //          questiondisplay(); //Calling the question function
+        //      }
+        //      else //When questons are completed
+        //      {
+                
+        //          end_Screen();   // To Show End Screen
+        //      }
+        //    }
+        //   },100);
         }
         else{
            
             count-=10; //Decrement in Timer if answer is wrong
+
              // To remove the buttons which we created early if they are already existed remove them
             while(choices.hasChildNodes())
             {
@@ -111,18 +160,34 @@ function questiondisplay(){
             }
             else
             {
-                end_screen.setAttribute("class","");             //Show end Screen
-                question_screen.setAttribute("class","hide");   //Hide Question screen
-                finalscore.textContent= score;                 //Display the score of the questions
-                count=0;                                      //To stop the timer
+                end_Screen();       // To Show End Screen
             }
             
         }
     });
     }
 
-}
+};
 
+// Function to display End screen and hide Question Screen
+function end_Screen(){
+    end_screen.setAttribute("class","");             //Show end Screen
+    question_screen.setAttribute("class","hide");   //Hide Question screen
+    finalscore.textContent= score;                 //Display the score of the questions
+    count=0;                                      //To stop the timer
+};
 
+// Run when user click on submit button of end screen
+submit.addEventListener("click", function(){
 
+    //Putting input value in a variabel before removeing all extra spaces
+    var user_name = initials.value.trim();
+
+    // Storing user name in local Storage
+    localStorage.setItem("user_name",user_name);
+    // Storing Score in local Storage
+    localStorage.setItem("Score",score);
+    // Going to the new Html Page
+    window.location.href="highscores.html";
+});
 
