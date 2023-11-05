@@ -165,7 +165,7 @@ scoresubmit.addEventListener("click", function(){
         storeinLocal_storage();
        
         // Going to the new Html Page
-       // window.location.href="highscores.html";
+       window.location.href="highscores.html";
     }
   
 });
