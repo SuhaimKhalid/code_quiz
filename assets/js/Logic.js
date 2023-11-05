@@ -13,7 +13,10 @@ var time = document.querySelector("#time");
 // Delcare a variable to access the input from End screen
 var initials = document.querySelector("#initials");
 // Declare a vaiable to get acces of the button
-var submit = document.querySelector("#submit");
+var scoresubmit = document.querySelector("#submit");
+
+var user_name_list=[];
+var score_list=[];
 
 
 // Delcare a variable to get the div of Question screen
@@ -108,40 +111,6 @@ function questiondisplay(){
                   end_Screen();   // To Show End Screen
               }
 
-        // var ct =  setInterval(function(){
-        //     var answer_timer=20;
-        //      // Show correct and wrong answers on the screen
-        //      var hr = document.createElement("hr");
-        //      var h5 = document.createElement("h5");
-        //      choices.appendChild(hr);
-        //      choices.appendChild(h5);
-        //      hr.setAttribute("style","opacity:0.5");
-        //      h5.setAttribute("style","opacity:0.5");
-        //      h5.textContent="CORRECT!";
-        //      answer_timer--;
-        //    if(answer_timer <0)
-        //    {
-        //     clearInterval(ct);
-        //     score+=10; //Add 10 score
-             
-        //    // To remove the buttons which we created early if they are already existed remove them
-        //      while(choices.hasChildNodes())
-        //      {
-        //          choices.removeChild(choices.firstChild);
-        //      }
-        //      // Checking to not exceed from the length of questions
-        //      if(qn < questions.length-1)
-        //      {
-        //          qn++;
-        //          questiondisplay(); //Calling the question function
-        //      }
-        //      else //When questons are completed
-        //      {
-                
-        //          end_Screen();   // To Show End Screen
-        //      }
-        //    }
-        //   },100);
         }
         else{
            
@@ -178,16 +147,56 @@ function end_Screen(){
 };
 
 // Run when user click on submit button of end screen
-submit.addEventListener("click", function(){
+scoresubmit.addEventListener("click", function(){
 
     //Putting input value in a variabel before removeing all extra spaces
-    var user_name = initials.value.trim();
+    var user_name = initials.value.trim(); 
+    
+    if(user_name === "")
+    {
+        alert("Please Enter Your Name");
+
+    }
+    else{
+
+        user_name_list.push(user_name);
+        score_list.push(score);
+        initials.value="";
+        storeinLocal_storage();
+       
+        // Going to the new Html Page
+       // window.location.href="highscores.html";
+    }
+  
+});
+
+
+
+function storeinLocal_storage(){
+
+  // Storing user name in local Storage
+  localStorage.setItem("user_name",JSON.stringify(user_name_list));
+   // Storing Score in local Storage
+   localStorage.setItem("score",JSON.stringify(score_list));
+}
+
+function retrivefromLocal_storage(){
 
     // Storing user name in local Storage
-    localStorage.setItem("user_name",user_name);
+    var rt_user_name = JSON.parse(localStorage.getItem("user_name"));
     // Storing Score in local Storage
-    localStorage.setItem("Score",score);
-    // Going to the new Html Page
-    window.location.href="highscores.html";
-});
+    var rt_score = JSON.parse(localStorage.getItem("score"));
+
+    // If todos were retrieved from localStorage, update the todos array to it
+  if (rt_user_name !== null) {
+    user_name_list = rt_user_name;
+  }
+  if (rt_score !== null) {
+    score_list = rt_score;
+  }
+  console.log(rt_user_name);
+  }
+  
+ 
+  retrivefromLocal_storage();
 
