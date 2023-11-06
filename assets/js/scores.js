@@ -65,8 +65,10 @@ function retivedata(){
 
 // Function  to clear to the local storage 
 clear.addEventListener("click", function(){
+    // remove data from local storage by keys
     localStorage.removeItem("user_name");
     localStorage.removeItem("score");
+    
     retivedata();
     show_high_score();
 });

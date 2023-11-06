@@ -1,4 +1,4 @@
-// Delcare a varaible to the id of button to start quiz
+// Delcare a variable to get id of button to start quiz
 var start_quiz = document.querySelector("#start");
 // Delcare a variable to get the div of start screen
 var start_screen = document.querySelector("#start-screen");
@@ -12,10 +12,21 @@ var choices = document.querySelector("#choices");
 var time = document.querySelector("#time");
 // Delcare a variable to access the input from End screen
 var initials = document.querySelector("#initials");
-// Declare a vaiable to get acces of the button
+// Declare a vaiable to get access of the button of submit
 var scoresubmit = document.querySelector("#submit");
 
+
+// Variable for correct answer Sound
+var correct_sound = document.createElement("audio");
+correct_sound.setAttribute("src","assets/sfx/correct.wav")
+
+// Variable for In Correct answer Sound
+var In_correct_sound = document.createElement("audio");
+In_correct_sound.setAttribute("src","assets/sfx/incorrect.wav")
+
+// Array to store local storage user name
 var user_name_list=[];
+// Array to store local storage score
 var score_list=[];
 
 
@@ -82,6 +93,7 @@ function questiondisplay(){
         // Checking if answer is correct or not
         if(event.target.dataset.index == questions[qn].correct)
         {
+            correct_sound.play();
             // Create Hr tag in html
             var hr = document.createElement("hr");
             // Create h5 tag in html
@@ -101,10 +113,10 @@ function questiondisplay(){
             // by display in html tag for specific period of time
             var answer_result = setInterval(function(){
 
-            answer_result_timer++;
+            answer_result_timer++;  
         if(answer_result_timer>5)
         {
-        
+          
             score+=10; //Add 10 score
              
             // To remove the buttons which we created early if they are already existed remove them
@@ -132,8 +144,9 @@ function questiondisplay(){
        },100)
 
         }
-// If user answer is wrong
+       // If user answer is wrong
         else{
+            In_correct_sound.play();
             // Create Hr tag in html
             var hr = document.createElement("hr");
             // Create h5 tag in html
@@ -149,7 +162,7 @@ function questiondisplay(){
             // Declare a variable to show answer for that time
             var answer_result_timer=0;
 
-  // Make a function to let user know if its answer is correct or wrong
+            // Make a function to let user know if its answer is correct or wrong
             // by display in html tag for specific period of time
             var answer_result = setInterval(function(){
 
@@ -177,8 +190,6 @@ function questiondisplay(){
                 //   End the timer
                   clearInterval(answer_result);
             }
-    
-    
     
            },100)
 
@@ -228,8 +239,8 @@ scoresubmit.addEventListener("click", function(){
 
 // Function to store data in local storage
 function storeinLocal_storage(){
-  // Storing user name in local Storage
-  localStorage.setItem("user_name",JSON.stringify(user_name_list));
+   // Storing user name in local Storage
+   localStorage.setItem("user_name",JSON.stringify(user_name_list));
    // Storing Score in local Storage
    localStorage.setItem("score",JSON.stringify(score_list));
 }

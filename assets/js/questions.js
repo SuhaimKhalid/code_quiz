@@ -1,3 +1,4 @@
+// Declare a variable which is array which keep object inside of it with the keys of question, answers and correct.
 var questions = [
     {
         question:"Commonly used data type Do Not include:",
