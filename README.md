@@ -51,15 +51,15 @@ Page published at: https://suhaimkhalid.github.io/password_generator/
 ## Screenshot
 
 ### Main Screen View
-![Html View](/Assets/Images/ScreenShot/Main_screen.png)
+![Html View](/assets/Images/ScreenShot/Main_screen.png)
 ### Question Screen
-![LowerCase Confirm](/Assets/Images/ScreenShot/Question%20Screen.png)
+![LowerCase Confirm](/assets/Images/ScreenShot/Question%20Screen.png)
 ### End Screen
-![UpperCase Confirm](/Assets/Images/ScreenShot/End_Screen.png)
+![UpperCase Confirm](/assets/Images/ScreenShot/End_Screen.png)
 ### High Score Screen
-![Numeric Character Confirm](/Assets/Images/ScreenShot/HighScores.png)
+![Numeric Character Confirm](/assets/Images/ScreenShot/HighScores.png)
 ### Responsive View
-![Special Character Confirm](/Assets/Images/ScreenShot/Responsive%20View.png)
+![Special Character Confirm](/assets/Images/ScreenShot/Responsive%20View.png)
 
 
 ## Contact

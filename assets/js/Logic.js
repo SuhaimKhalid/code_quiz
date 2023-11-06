@@ -40,6 +40,7 @@ var count=75;    //To show Count down timer
 var qn=0;       //Number of questions
 var score=0;   //Save score on the base of right answer
 
+
 // Function to Start quiz on the click of button
 start_quiz.addEventListener("click",function(event)
 {
@@ -84,122 +85,127 @@ function questiondisplay(){
     // Show the answers in the button
     button.textContent= i+"."+ questions[qn].answers[i]; 
     button.setAttribute("data-index", i);  
-
-   
-
-    //Make the function to get the target of button on which we click
-    button.addEventListener("click",function getanswer(event){
-       
-        // Checking if answer is correct or not
-        if(event.target.dataset.index == questions[qn].correct)
-        {
-            correct_sound.play();
-            // Create Hr tag in html
-            var hr = document.createElement("hr");
-            // Create h5 tag in html
-            var h5 = document.createElement("h5");
-            choices.appendChild(hr);
-            choices.appendChild(h5);
-            // Add some styling to these newly created tags
-            hr.setAttribute("style","opacity:0.5");
-            h5.setAttribute("style","opacity:0.5");
-            // if answer is correct
-            h5.textContent="CORRECT!";
-
-            // Declare a variable to show answer for that time
-            var answer_result_timer=0;
-
-            // Make a function to let user know if its answer is correct or wrong
-            // by display in html tag for specific period of time
-            var answer_result = setInterval(function(){
-
-            answer_result_timer++;  
-        if(answer_result_timer>5)
-        {
-          
-            score+=10; //Add 10 score
-             
-            // To remove the buttons which we created early if they are already existed remove them
-              while(choices.hasChildNodes())
-              {
-                  choices.removeChild(choices.firstChild);
-              }
-              // Checking to not exceed from the length of questions
-              if(qn < questions.length-1)
-              {
-                  qn++;
-                  questiondisplay(); //Calling the question function
-              }
-              else //When questons are completed
-              {
-                 
-                  end_Screen();   // To Show End Screen
-              }
-            //   End the timer
-              clearInterval(answer_result);
-        }
-
-
-
-       },100)
-
-        }
-       // If user answer is wrong
-        else{
-            In_correct_sound.play();
-            // Create Hr tag in html
-            var hr = document.createElement("hr");
-            // Create h5 tag in html
-            var h5 = document.createElement("h5");
-            choices.appendChild(hr);
-            choices.appendChild(h5);
-            // Add some styling to these newly created tags
-            hr.setAttribute("style","opacity:0.5");
-            h5.setAttribute("style","opacity:0.5");
-            // if answer is correct
-            h5.textContent="WRONG!";
-
-            // Declare a variable to show answer for that time
-            var answer_result_timer=0;
-
-            // Make a function to let user know if its answer is correct or wrong
-            // by display in html tag for specific period of time
-            var answer_result = setInterval(function(){
-
-                answer_result_timer++;
+    
+    
+        //Make the function to get the target of button on which we click
+        button.addEventListener("click",function getanswer(event){
+            answer_select=true;
+            // Checking if answer is correct or not
+            if(event.target.dataset.index == questions[qn].correct)
+            {
+                correct_sound.play();
+    
+                // Create Hr tag in html
+                var hr = document.createElement("hr");
+                // Create h5 tag in html
+                var h5 = document.createElement("h5");
+                choices.appendChild(hr);
+                choices.appendChild(h5);
+                // Add some styling to these newly created tags
+                hr.setAttribute("style","opacity:0.5");
+                h5.setAttribute("style","opacity:0.5");
+                // if answer is correct
+                h5.textContent="CORRECT!";
+    
+                // Declare a variable to show answer for that time
+                var answer_result_timer=0;
+    
+                // Make a function to let user know if its answer is correct or wrong
+                // by display in html tag for specific period of time
+                var answer_result = setInterval(function(){
+    
+                answer_result_timer++;  
             if(answer_result_timer>5)
             {
-            
-                count-=10; //Decrement in Timer if answer is wrong
-
+    
+                score+=10; //Add 10 score
+                
                 // To remove the buttons which we created early if they are already existed remove them
-               while(choices.hasChildNodes())
-               {
-                   choices.removeChild(choices.firstChild);
-               }
+                while(choices.hasChildNodes())
+                {
+                    choices.removeChild(choices.firstChild);
+                }
                 // Checking to not exceed from the length of questions
-               if(qn < questions.length-1)
-               {
-                   qn++;
-                   questiondisplay();  //Calling the question function
-               }
-               else
-               {
-                   end_Screen();       // To Show End Screen
-               }
+                if(qn < questions.length-1)
+                {
+                    qn++;
+                    questiondisplay(); //Calling the question function
+                }
+                else //When questons are completed
+                {
+                    
+                    end_Screen();   // To Show End Screen
+                }
                 //   End the timer
-                  clearInterval(answer_result);
+                clearInterval(answer_result);
             }
     
-           },100)
-
-            
-            
-        }
-    });
+    
+    
+            },70)
+    
+            }
+            // If user answer is wrong
+            else{
+                In_correct_sound.play();
+                // Create Hr tag in html
+                var hr = document.createElement("hr");
+                // Create h5 tag in html
+                var h5 = document.createElement("h5");
+                choices.appendChild(hr);
+                choices.appendChild(h5);
+                // Add some styling to these newly created tags
+                hr.setAttribute("style","opacity:0.5");
+                h5.setAttribute("style","opacity:0.5");
+                // if answer is correct
+                h5.textContent="WRONG!";
+    
+                // Declare a variable to show answer for that time
+                var answer_result_timer=0;
+    
+                // Make a function to let user know if its answer is correct or wrong
+                // by display in html tag for specific period of time
+                var answer_result = setInterval(function(){
+    
+                    answer_result_timer++;
+                if(answer_result_timer>5)
+                {
+                
+                    count-=10; //Decrement in Timer if answer is wrong
+    
+                    // To remove the buttons which we created early if they are already existed remove them
+                while(choices.hasChildNodes())
+                {
+                    choices.removeChild(choices.firstChild);
+                }
+                    // Checking to not exceed from the length of questions
+                if(qn < questions.length-1)
+                {
+                    qn++;
+                    questiondisplay();  //Calling the question function
+                }
+                else
+                {
+                    end_Screen();       // To Show End Screen
+                }
+                    //   End the timer
+                    clearInterval(answer_result);
+                }
+    
+            },70)
+    
+                
+                
+            }
+            });
+           
     }
 
 };
+
+
+// Function to select answer
+
 
 // Function to display End screen and hide Question Screen
 function end_Screen(){
