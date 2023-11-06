@@ -46,7 +46,7 @@ Javascript is the main Language in which all of the code is written for this pro
 
 ## Deployed page
 
-Page published at: https://suhaimkhalid.github.io/password_generator/
+Page published at: https://suhaimkhalid.github.io/code_quiz/index.html
 
 ## Screenshot
 
