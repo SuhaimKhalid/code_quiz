@@ -82,16 +82,29 @@ function questiondisplay(){
         // Checking if answer is correct or not
         if(event.target.dataset.index == questions[qn].correct)
         {
+            // Create Hr tag in html
             var hr = document.createElement("hr");
+            // Create h5 tag in html
             var h5 = document.createElement("h5");
             choices.appendChild(hr);
             choices.appendChild(h5);
+            // Add some styling to these newly created tags
             hr.setAttribute("style","opacity:0.5");
             h5.setAttribute("style","opacity:0.5");
+            // if answer is correct
             h5.textContent="CORRECT!";
-            console.log(h5);
 
+            // Declare a variable to show answer for that time
+            var answer_result_timer=0;
 
+            // Make a function to let user know if its answer is correct or wrong
+            // by display in html tag for specific period of time
+            var answer_result = setInterval(function(){
+
+            answer_result_timer++;
+        if(answer_result_timer>5)
+        {
+        
             score+=10; //Add 10 score
              
             // To remove the buttons which we created early if they are already existed remove them
@@ -110,27 +123,66 @@ function questiondisplay(){
                  
                   end_Screen();   // To Show End Screen
               }
+            //   End the timer
+              clearInterval(answer_result);
+        }
+
+
+
+       },100)
 
         }
+// If user answer is wrong
         else{
-           
-            count-=10; //Decrement in Timer if answer is wrong
+            // Create Hr tag in html
+            var hr = document.createElement("hr");
+            // Create h5 tag in html
+            var h5 = document.createElement("h5");
+            choices.appendChild(hr);
+            choices.appendChild(h5);
+            // Add some styling to these newly created tags
+            hr.setAttribute("style","opacity:0.5");
+            h5.setAttribute("style","opacity:0.5");
+            // if answer is correct
+            h5.textContent="WRONG!";
 
-             // To remove the buttons which we created early if they are already existed remove them
-            while(choices.hasChildNodes())
+            // Declare a variable to show answer for that time
+            var answer_result_timer=0;
+
+  // Make a function to let user know if its answer is correct or wrong
+            // by display in html tag for specific period of time
+            var answer_result = setInterval(function(){
+
+                answer_result_timer++;
+            if(answer_result_timer>5)
             {
-                choices.removeChild(choices.firstChild);
+            
+                count-=10; //Decrement in Timer if answer is wrong
+
+                // To remove the buttons which we created early if they are already existed remove them
+               while(choices.hasChildNodes())
+               {
+                   choices.removeChild(choices.firstChild);
+               }
+                // Checking to not exceed from the length of questions
+               if(qn < questions.length-1)
+               {
+                   qn++;
+                   questiondisplay();  //Calling the question function
+               }
+               else
+               {
+                   end_Screen();       // To Show End Screen
+               }
+                //   End the timer
+                  clearInterval(answer_result);
             }
-             // Checking to not exceed from the length of questions
-            if(qn < questions.length-1)
-            {
-                qn++;
-                questiondisplay();  //Calling the question function
-            }
-            else
-            {
-                end_Screen();       // To Show End Screen
-            }
+    
+    
+    
+           },100)
+
+            
             
         }
     });
@@ -152,15 +204,18 @@ scoresubmit.addEventListener("click", function(){
     //Putting input value in a variabel before removeing all extra spaces
     var user_name = initials.value.trim(); 
     
+    // If User Input field is empty
     if(user_name === "")
     {
         alert("Please Enter Your Name");
-
     }
     else{
 
+        // Getting user input value and store it in the array
         user_name_list.push(user_name);
+        // Getting score input value and store it in the array
         score_list.push(score);
+        // Clearing the input field
         initials.value="";
         storeinLocal_storage();
        
@@ -171,30 +226,29 @@ scoresubmit.addEventListener("click", function(){
 });
 
 
-
+// Function to store data in local storage
 function storeinLocal_storage(){
-
   // Storing user name in local Storage
   localStorage.setItem("user_name",JSON.stringify(user_name_list));
    // Storing Score in local Storage
    localStorage.setItem("score",JSON.stringify(score_list));
 }
 
+// Function to retrive data from local storage
 function retrivefromLocal_storage(){
 
-    // Storing user name in local Storage
+    // Getting user name data from local Storage and covert it through jASON.parse()
     var rt_user_name = JSON.parse(localStorage.getItem("user_name"));
-    // Storing Score in local Storage
+    // Getting Score data from local Storage and covert it through jASON.parse()
     var rt_score = JSON.parse(localStorage.getItem("score"));
 
-    // If todos were retrieved from localStorage, update the todos array to it
-  if (rt_user_name !== null) {
+    // If array are not empty then store local storage data in it
+    if (rt_user_name !== null) {
     user_name_list = rt_user_name;
-  }
-  if (rt_score !== null) {
+    }
+    if (rt_score !== null) {
     score_list = rt_score;
-  }
-  console.log(rt_user_name);
+    }
   }
   
  
